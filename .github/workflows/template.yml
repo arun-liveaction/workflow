@@ -22,3 +22,16 @@ jobs:
       - id: printVariables
         run: |
             echo "${{ fromJSON(steps.setVariables.outputs.matrix) }}"
+
+  deploy:
+    name: Grid deployment
+    runs-on: ubuntu-latest
+    needs:
+      - setup
+    strategy:
+      matrix:
+        environment: ${{ fromJSON(needs.setup.outputs.matrix) }}
+    steps:
+      - id: Test
+        run: |
+          echo "$input"
