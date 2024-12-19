@@ -1,0 +1,24 @@
+name: Template
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Choose where you want to test'
+        required: true
+        default: '["dev", "QA"]'
+        type: string
+  
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.setVariables.outputs.matrix }}
+    steps:
+      - id: setVariables
+        run: |
+            echo "matrix=$input" >> $GITHUB_OUTPUT
+        env:
+            input: ${{ inputs.environment }}
+      - id: printVariables
+        run: |
+            echo "${{ fromJSON(steps.setVariables.outputs.matrix) }}"
