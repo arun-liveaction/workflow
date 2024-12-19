@@ -1,0 +1,14 @@
+name: 'Test deployment'
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  release:
+    name: Release
+    secrets: inherit
+    uses: arun-liveaction/workflow/.github/workflows/template.yml@main
+    with:
+      environment: '["dev", "QA"]'
